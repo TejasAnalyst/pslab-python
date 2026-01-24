@@ -16,7 +16,7 @@ from pslab.connection import SerialHandler
 WRITE_DATA = 0x55
 TXD2 = "LA1"
 RXD2 = "SQ1"
-PWM_FERQUENCY = UART._baudrate // 2
+PWM_FREQUENCY = 1000
 MICROSECONDS = 1e-6
 RELTOL = 0.05
 # Number of expected logic level changes.
@@ -38,7 +38,7 @@ def la(handler: SerialHandler) -> LogicAnalyzer:
 @pytest.fixture
 def pwm(handler: SerialHandler) -> None:
     pwm = PWMGenerator(handler)
-    pwm.generate(RXD2, PWM_FERQUENCY, 0.5)
+    pwm.generate(RXD2, PWM_FREQUENCY, 0.5)
 
 
 def test_configure(la: LogicAnalyzer, uart: UART):

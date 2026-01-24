@@ -30,7 +30,7 @@ SDI = ["LA4", "SQ1"]
 CS = "LA3"
 SPIMaster._primary_prescaler = PPRE = 0
 SPIMaster._secondary_prescaler = SPRE = 0
-PWM_FERQUENCY = SPIMaster._frequency * 2 / 3
+PWM_FREQUENCY = 1000
 MICROSECONDS = 1e-6
 RELTOL = 0.05
 # Number of expected logic level changes.
@@ -61,7 +61,7 @@ def slave(handler: SerialHandler) -> SPISlave:
 @pytest.fixture
 def la(handler: SerialHandler) -> LogicAnalyzer:
     pwm = PWMGenerator(handler)
-    pwm.generate(SDI[1], PWM_FERQUENCY, 0.5)
+    pwm.generate(SDI[1], PWM_FREQUENCY, 0.5)
     return LogicAnalyzer(handler)
 
 
@@ -73,7 +73,7 @@ def verify_value(
     smp: int = 0,
 ):
     sck_ts = sck_timestamps[smp::2]
-    pwm_half_period = ((1 / PWM_FERQUENCY) * 1e6) / 2  # microsecond
+    pwm_half_period = ((1 / PWM_FREQUENCY) * 1e6) / 2  # microsecond
 
     pattern = ""
     for t in sck_ts:
