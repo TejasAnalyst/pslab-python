@@ -30,7 +30,8 @@ SDI = ["LA4", "SQ1"]
 CS = "LA3"
 SPIMaster._primary_prescaler = PPRE = 0
 SPIMaster._secondary_prescaler = SPRE = 0
-PWM_FREQUENCY = 1000
+# Static value 100kHz used because instance property '_frequency' cannot be accessed on the class.
+PWM_FREQUENCY = 100000.0
 MICROSECONDS = 1e-6
 RELTOL = 0.05
 # Number of expected logic level changes.

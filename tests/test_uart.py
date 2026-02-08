@@ -16,7 +16,8 @@ from pslab.connection import SerialHandler
 WRITE_DATA = 0x55
 TXD2 = "LA1"
 RXD2 = "SQ1"
-PWM_FREQUENCY = 1000
+# Static value 500kHz (half of default 1MHz baudrate) used as instance property cannot be accessed here.
+PWM_FREQUENCY = 500000.0
 MICROSECONDS = 1e-6
 RELTOL = 0.05
 # Number of expected logic level changes.
