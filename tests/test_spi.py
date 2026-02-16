@@ -31,7 +31,6 @@ CS = "LA3"
 SPIMaster._primary_prescaler = PPRE = 0
 SPIMaster._secondary_prescaler = SPRE = 0
 # Static value 100kHz used because instance property '_frequency' cannot be accessed on the class.
-PWM_FREQUENCY = 100000.0
 MICROSECONDS = 1e-6
 RELTOL = 0.05
 # Number of expected logic level changes.
@@ -60,9 +59,11 @@ def slave(handler: SerialHandler) -> SPISlave:
 
 
 @pytest.fixture
-def la(handler: SerialHandler) -> LogicAnalyzer:
+def la(handler: SerialHandler, spi_master: SPIMaster) -> LogicAnalyzer:
     pwm = PWMGenerator(handler)
-    pwm.generate(SDI[1], PWM_FREQUENCY, 0.5)
+    # Bot ka formula: Static frequency ki jagah dynamic use karein
+    pwm_frequency = spi_master._frequency * 2 / 3
+    pwm.generate(SDI[1], pwm_frequency, 0.5)
     return LogicAnalyzer(handler)
 
 

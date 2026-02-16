@@ -214,29 +214,6 @@ class _SPIPrimitive:
             cls._smp,
         )
 
-    def _start(self):
-        """Select SPI channel to enable.
-
-        Basically sets the relevant chip select pin to LOW.
-
-        External ChipSelect pins:
-            version < 5 : {6, 7} # RC5, RC4 (dropped support)
-            version == 5 : {} (don't have any external CS pins)
-            version == 6 : {7} # RC4
-        """
-        self._device.send_byte(CP.SPI_HEADER)
-        self._device.send_byte(CP.START_SPI)
-        self._device.send_byte(7)  # SPI.CS v6
-        # No ACK because `RESPONSE == DO_NOT_BOTHER` in firmware.
-
-    def _stop(self):
-        """Select SPI channel to disable.
-
-        Sets the relevant chip select pin to HIGH.
-        """
-        self._device.send_byte(CP.SPI_HEADER)
-        self._device.send_byte(CP.STOP_SPI)
-        self._device.send_byte(7)  # SPI.CS v6
 
     def _transfer(self, data: int, bits: int) -> int:
         """Send data over SPI and receive data from SPI simultaneously.
