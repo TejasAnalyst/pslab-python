@@ -64,6 +64,8 @@ class ScienceLab:
         
         # Clean lookup from global constants
         cal = TEMP_CALIB.get(cs)
+        if cal is None:
+         raise ValueError(f"Unsupported current source: {cs}")
         return (cal["offset"] - V * 1000) / cal["slope"]
 
     def _get_ctmu_voltage(self, channel: int, current_range: int, tgen: bool = True):
